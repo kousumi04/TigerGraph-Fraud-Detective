@@ -1,0 +1,1 @@
+"""Validate all investigation cases."""

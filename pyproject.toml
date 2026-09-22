@@ -1,0 +1,10 @@
+[project]
+name = "fraud-agent"
+version = "0.1.0"
+description = "Fraud investigation agent"
+requires-python = ">=3.11"
+dependencies = []
+
+[tool.pytest.ini_options]
+pythonpath = ["backend"]
+testpaths = ["backend/tests", "tests"]

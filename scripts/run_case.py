@@ -1,0 +1,1 @@
+"""Run one investigation case."""
