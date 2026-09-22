@@ -6,13 +6,13 @@ class Settings(BaseSettings):
     environment: Literal["development", "production", "test"] = "development"
     log_level: str = "INFO"
 
-    # LLM Settings
-    llm_provider: Literal["cerebras", "openrouter", "huggingface"] = "openrouter"
-    llm_model: str = "openai/gpt-oss-120b"
-    llm_api_key: str
+    # Add "groq" to the allowed providers
+    llm_provider: Literal["cerebras", "openrouter", "huggingface", "groq"] = "groq"
+    llm_model: str = "gpt-oss-120b"
+    llm_api_key: str = "dev-key-placeholder"
     
     # TigerGraph Settings
-    tg_host: str
+    tg_host: str = "http://127.0.0.1:14240"
     tg_username: str = "tigergraph"
     tg_password: str = "tigergraph"
     tg_secret: str = ""
@@ -24,6 +24,6 @@ class Settings(BaseSettings):
     max_prior_cases: int = 8
     max_evidence_items: int = 30
     
-    model_config = SettingsConfigDict(env_file=".env", extra="ignore")
+    model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", extra="ignore")
 
 settings = Settings()

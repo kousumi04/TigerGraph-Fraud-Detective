@@ -2,7 +2,7 @@
 from typing import Dict, Any
 from ..models.schemas import BenchmarkCaseOutput, CaseDetails, NextBestActions, Action
 from ..models.state import InvestigationState
-from .sar_generator import generate_sar
+from ..fraud.sar_generator import generate_sar
 
 def format_benchmark_output(state: InvestigationState) -> BenchmarkCaseOutput:
     """

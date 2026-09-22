@@ -13,7 +13,8 @@ def get_llm_client() -> ChatOpenAI:
     base_urls = {
         "openrouter": "https://openrouter.ai/api/v1",
         "cerebras": "https://api.cerebras.ai/v1",
-        "huggingface": "https://api-inference.huggingface.co/v1"
+        "huggingface": "https://api-inference.huggingface.co/v1",
+        "groq": "https://api.groq.com/openai/v1"  # Added Groq endpoint
     }
     
     base_url = base_urls.get(settings.llm_provider, base_urls["openrouter"])
@@ -22,8 +23,8 @@ def get_llm_client() -> ChatOpenAI:
         model=settings.llm_model,
         api_key=settings.llm_api_key,
         base_url=base_url,
-        temperature=0.1, # Low temperature for analytical reasoning
-        max_retries=0    # We handle retries via tenacity for custom logging
+        temperature=0.1,
+        max_retries=0
     )
 
 @retry(
