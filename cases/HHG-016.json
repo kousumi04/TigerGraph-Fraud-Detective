@@ -1,1 +1,69 @@
-{"case_id":"HHG-016","status":"fixture"}
+{
+  "case_id": "HHG-016",
+  "case": {
+    "status": "closed_fraud",
+    "verdict": "fraud",
+    "fraud_probability": 1.0,
+    "pattern": "card_not_present",
+    "pattern_description": "Determined by deterministic signatures and LLM verification.",
+    "affected_txn_ids": [
+      "TXN-016"
+    ],
+    "first_suspicious_txn_id": "TXN-016",
+    "connected_card_ids": [],
+    "connected_device_profiles": [
+      "DEV-99"
+    ],
+    "exposure_usd": 150.0,
+    "evidence": [],
+    "similar_prior_cases": [
+      "HIST-991"
+    ],
+    "summary": "Automated agentic investigation complete.",
+    "written_to_graph": true,
+    "graph_case_id": "TG-HHG-016"
+  },
+  "evidence_requests": [
+    {
+      "type": "customer_validation",
+      "asked_after_step": 7,
+      "assumed_response": "Simulation Default: denied"
+    }
+  ],
+  "next_best_actions": {
+    "initial": [
+      {
+        "action": "MONITOR_CARD",
+        "route": "auto",
+        "reason": "Default protective baseline active."
+      }
+    ],
+    "final": [
+      {
+        "action": "BLOCK_ALL_CARDS",
+        "route": "L1",
+        "reason": "R9: Customer confirmed transaction was unauthorized."
+      },
+      {
+        "action": "FILE_REPORT",
+        "route": "L2",
+        "reason": "R7: Regulatory filing triggered (Exposure: $150.00, Probability: 1.00)."
+      }
+    ],
+    "what_changed": "Evidence simulation shifted probability."
+  },
+  "sar": {
+    "file": true,
+    "reason": "Automated fallback due to generation error.",
+    "narrative": "Suspicious activity detected on case HHG-016. Automated pattern match identified. Further investigation required.",
+    "subjects": [
+      "HHG-016"
+    ],
+    "total_amount_usd": 0.0,
+    "activity_dates": []
+  },
+  "stop_reason": "Policy thresholds met or maximum evidence gathered.",
+  "tool_calls": 8,
+  "tokens": 1022,
+  "latency_s": 1.5045497417449951
+}

@@ -1,1 +1,71 @@
-{"case_id":"HHG-003","status":"fixture"}
+{
+  "case_id": "HHG-003",
+  "case": {
+    "status": "closed_fraud",
+    "verdict": "fraud",
+    "fraud_probability": 1.0,
+    "pattern": "card_not_present",
+    "pattern_description": "Determined by deterministic signatures and LLM verification.",
+    "affected_txn_ids": [
+      "TXN-003"
+    ],
+    "first_suspicious_txn_id": "TXN-003",
+    "connected_card_ids": [],
+    "connected_device_profiles": [
+      "DEV-99"
+    ],
+    "exposure_usd": 150.0,
+    "evidence": [],
+    "similar_prior_cases": [
+      "HIST-991"
+    ],
+    "summary": "Automated agentic investigation complete.",
+    "written_to_graph": true,
+    "graph_case_id": "TG-HHG-003"
+  },
+  "evidence_requests": [
+    {
+      "type": "customer_validation",
+      "asked_after_step": 7,
+      "assumed_response": "Simulation Default: denied"
+    }
+  ],
+  "next_best_actions": {
+    "initial": [
+      {
+        "action": "MONITOR_CARD",
+        "route": "auto",
+        "reason": "Default protective baseline active."
+      }
+    ],
+    "final": [
+      {
+        "action": "BLOCK_ALL_CARDS",
+        "route": "L1",
+        "reason": "R9: Customer confirmed transaction was unauthorized."
+      },
+      {
+        "action": "FILE_REPORT",
+        "route": "L2",
+        "reason": "R7: Regulatory filing triggered (Exposure: $150.00, Probability: 1.00)."
+      }
+    ],
+    "what_changed": "Evidence simulation shifted probability."
+  },
+  "sar": {
+    "file": true,
+    "reason": "Policy threshold triggered mandatory SAR filing.",
+    "narrative": "The report concerns the customer associated with case HHG-003 and transaction TXN-003. A suspicious activity was triggered by a risk score of 0.85 on transaction TXN-003. The detection occurred during the monitoring process, though no specific date is provided. The activity is linked to a single device relationship, indicating one device connected to the account. The customer's identity status is verified, which does not mitigate the elevated risk. The device relationship and the absence of a flagged transaction suggest a possible link to a shared device profile previously seen in prior closed case HIST-991. The prior case involved a card‑not‑present fraud pattern, raising concern that the current case may follow a similar modus operandi. Therefore, the SAR recommends further investigation of the device and any associated accounts.",
+    "subjects": [
+      "HHG-003",
+      "TXN-003",
+      "HIST-991"
+    ],
+    "total_amount_usd": 150.0,
+    "activity_dates": []
+  },
+  "stop_reason": "Policy thresholds met or maximum evidence gathered.",
+  "tool_calls": 8,
+  "tokens": 1126,
+  "latency_s": 1.8064417839050293
+}
