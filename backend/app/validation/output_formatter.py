@@ -5,23 +5,31 @@ from ..models.state import InvestigationState
 from ..fraud.sar_generator import generate_sar
 
 def format_benchmark_output(state: InvestigationState) -> BenchmarkCaseOutput:
-    """
-    Converts the final LangGraph state into the strict JSON schema required for the benchmark cases.
-    """
     txns = state.get("transaction_evidence", [])
     exposure = sum(float(t.get("amount", 0.0)) for t in txns)
     affected_ids = [str(t.get("id", "")) for t in txns if t.get("status") == "flagged"]
-    
     first_suspicious = affected_ids[0] if affected_ids else ""
     
-    # Map actions
     initial_acts = [Action(**a) if isinstance(a, dict) else a for a in state.get("initial_actions", [])]
     final_acts = [Action(**a) if isinstance(a, dict) else a for a in state.get("final_actions", [])]
     
+    # --- ADD THIS BLOCK TO DYNAMICALLY MAP PROBABILITY TO STATUS/VERDICT ---
+    prob = state.get("fraud_probability_final", 0.0)
+    if prob >= 0.85:
+        final_status = "closed_fraud"
+        final_verdict = "fraud"
+    elif prob <= 0.15:
+        final_status = "closed_legitimate"
+        final_verdict = "legitimate"
+    else:
+        final_status = "escalated"
+        final_verdict = "uncertain"
+    # -------------------------------------------------------------------------
+    
     case_details = CaseDetails(
-        status=state.get("status", "closed_legitimate"),
-        verdict="fraud" if state.get("fraud_probability_final", 0.0) >= 0.85 else "legitimate" if state.get("fraud_probability_final", 1.0) <= 0.15 else "uncertain",
-        fraud_probability=state.get("fraud_probability_final", 0.0),
+        status=final_status,      # <-- Use the dynamic status
+        verdict=final_verdict,    # <-- Use the dynamic verdict
+        fraud_probability=prob,
         pattern=state.get("pattern_candidates", ["none"])[0] if state.get("pattern_candidates") else "none",
         pattern_description="Determined by deterministic signatures and LLM verification.",
         affected_txn_ids=affected_ids,
@@ -29,7 +37,7 @@ def format_benchmark_output(state: InvestigationState) -> BenchmarkCaseOutput:
         connected_card_ids=[str(c.get("id", "")) for c in state.get("connected_card_evidence", [])],
         connected_device_profiles=[str(d.get("id", "")) for d in state.get("device_evidence", [])],
         exposure_usd=exposure,
-        evidence=[], # In a full run, map `state["evidence_packet"]` back to `Evidence` objects here
+        evidence=[], 
         similar_prior_cases=[str(c.get("case_id", "")) for c in state.get("prior_cases", [])],
         summary="Automated agentic investigation complete.",
         written_to_graph=bool(state.get("graph_case_id")),

@@ -3,7 +3,6 @@ from typing import Dict, Any
 from ..models.state import InvestigationState
 
 def request_and_simulate_evidence(state: InvestigationState) -> Dict[str, Any]:
-    """Simulates requesting customer verification if uncertainty is high."""
     req = {
         "type": "customer_validation",
         "asked_after_step": state.get("tool_calls", 0),
@@ -17,17 +16,21 @@ def request_and_simulate_evidence(state: InvestigationState) -> Dict[str, Any]:
     }
 
 def finalize_case(state: InvestigationState) -> Dict[str, Any]:
-    """Prepares the final structured output and triggers graph memory write."""
     prob = state.get("fraud_probability_final", 0.0)
+    
     if prob >= 0.85:
         verdict = "fraud"
+        status = "closed_fraud"
     elif prob <= 0.15:
         verdict = "legitimate"
+        status = "closed_legitimate"
     else:
         verdict = "uncertain"
+        status = "escalated"
         
     return {
         "stop_reason": "Policy thresholds met or maximum evidence gathered.",
         "graph_case_id": f"TG-{state.get('case_id')}",
-        "status": "closed_fraud" if verdict == "fraud" else "closed_legitimate",
+        "verdict": verdict,
+        "status": status,
     }

@@ -8,7 +8,7 @@ class Settings(BaseSettings):
 
     # Add "groq" to the allowed providers
     llm_provider: Literal["cerebras", "openrouter", "huggingface", "groq"] = "groq"
-    llm_model: str = "gpt-oss-120b"
+    llm_model: str = "openai/gpt-oss-120b"
     llm_api_key: str = "dev-key-placeholder"
     
     # TigerGraph Settings
