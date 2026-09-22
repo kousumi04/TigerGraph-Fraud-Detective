@@ -1,6 +1,9 @@
 __pycache__/
 *.py[cod]
 *.so
+*.log
+*.tmp
+*.bak
 .venv/
 venv/
 env/
@@ -11,10 +14,17 @@ env/
 htmlcov/
 *.egg-info/
 build/
+*.sqlite
+*.sqlite3
+*.db
 
 .env
 .env.*
 !.env.example
+
+.DS_Store
+Thumbs.db
+.idea/
 
 .next/
 node_modules/
@@ -25,3 +35,11 @@ logs/*
 artifacts/*
 !logs/.gitkeep
 !artifacts/.gitkeep
+
+# Large local datasets / exports
+data/transactions.csv
+data/*.parquet
+data/*.feather
+data/*.arrow
+data/*.zip
+data/*.gz
