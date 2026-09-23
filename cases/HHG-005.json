@@ -6,6 +6,8 @@
     "fraud_probability": 1.0,
     "pattern": "card_not_present",
     "pattern_description": "Determined by deterministic signatures and LLM verification.",
+    "customer_id": "Extracted-Customer-ID",
+    "trigger_type": "risk_score",
     "affected_txn_ids": [
       "TXN-005"
     ],
@@ -50,22 +52,50 @@
         "reason": "R7: Regulatory filing triggered (Exposure: $150.00, Probability: 1.00)."
       }
     ],
-    "what_changed": "Evidence simulation shifted probability."
+    "what_changed": "Evidence simulation shifted probability.",
+    "triggered_rules": [
+      "R7",
+      "R9"
+    ]
   },
   "sar": {
     "file": true,
-    "reason": "Policy threshold triggered mandatory SAR filing.",
-    "narrative": "The SAR concerns the customer linked to case HHG-005 who submitted transaction TXN-005. Transaction TXN-005 generated a risk score of 0.85, triggering the SAR. The transaction was processed using a single device that has one device relationship recorded. Analysis revealed that this device was also associated with prior closed case HIST-991, which resulted in a fraud verdict for a card‑not‑present pattern. The shared device profile creates a direct link between the current activity and the known fraudulent behavior. The customer's identity status is verified, but the absence of a flagged transaction and the presence of a high risk score increase concern. Consequently, the activity is deemed suspicious due to the high risk score, the device linkage to a confirmed fraud case, and the lack of additional mitigating evidence.",
+    "reason": "Automated fallback due to generation error.",
+    "narrative": "Suspicious activity detected on case HHG-005. Automated pattern match identified. Further investigation required.",
     "subjects": [
-      "HHG-005",
-      "TXN-005",
-      "HIST-991"
+      "HHG-005"
     ],
-    "total_amount_usd": 150.0,
+    "total_amount_usd": 0.0,
     "activity_dates": []
+  },
+  "playbook": {
+    "case_id": "HHG-005",
+    "verdict": "fraud",
+    "pattern": "card_not_present",
+    "primary_action": "BLOCK_ALL_CARDS",
+    "approval_route": "L1",
+    "sla_hours": 24,
+    "containment_steps": [
+      "Place temporary security authorization hold on transaction TXN-005",
+      "Issue immediate network-level block on all linked card PANs"
+    ],
+    "customer_communication": {
+      "channel": "SMS / In-App Push",
+      "message_copy": "Did you attempt a purchase of $150.00? Reply YES if this was you, or NO if you did not make this purchase."
+    },
+    "financial_remediation": [
+      "Initiate chargeback procedures for identified exposure"
+    ],
+    "compliance_actions": [
+      "Confirm policy rule alignment (R7, R9)"
+    ],
+    "sign_off_checklist": [
+      "Verify financial exposure calculation ($150.00)",
+      "Confirm TigerGraph graph resolution payload"
+    ]
   },
   "stop_reason": "Policy thresholds met or maximum evidence gathered.",
   "tool_calls": 8,
-  "tokens": 1080,
-  "latency_s": 1.3185713291168213
+  "tokens": 984,
+  "latency_s": 1.4794161319732666
 }

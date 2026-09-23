@@ -6,6 +6,8 @@
     "fraud_probability": 1.0,
     "pattern": "card_not_present",
     "pattern_description": "Determined by deterministic signatures and LLM verification.",
+    "customer_id": "Extracted-Customer-ID",
+    "trigger_type": "risk_score",
     "affected_txn_ids": [
       "TXN-001"
     ],
@@ -50,12 +52,16 @@
         "reason": "R7: Regulatory filing triggered (Exposure: $150.00, Probability: 1.00)."
       }
     ],
-    "what_changed": "Evidence simulation shifted probability."
+    "what_changed": "Evidence simulation shifted probability.",
+    "triggered_rules": [
+      "R7",
+      "R9"
+    ]
   },
   "sar": {
     "file": true,
     "reason": "Policy threshold triggered mandatory SAR filing.",
-    "narrative": "The SAR concerns case HHG-001, which was flagged when transaction TXN-001 generated a risk score of 0.85. The customer associated with the case has a verified identity status but no account age information is available. The transaction itself is not provided, indicating a missing flagged_transaction field. Analysis revealed a single device relationship linking the customer to prior activity. No connected cards were identified for the customer, reducing the immediate card exposure. A prior closed case, HIST-991, was adjudicated as fraud and involved a card‑not‑present pattern, and its device profile matches the current customer’s device. The combination of a high risk score, verified identity, shared device with a known fraud case, and lack of transaction details justifies further investigation.",
+    "narrative": "The SAR concerns case HHG-001 involving a customer with a verified identity status. The trigger was transaction TXN-001 which received a risk score of 0.85. The transaction was flagged despite no explicit flagged transaction details being present. Analysis revealed one device relationship linking the customer to a previously closed case HIST-991. The prior case HIST-991 was adjudicated as fraud and involved a card-not-present pattern with a shared device profile. The presence of the shared device profile and the high risk score indicate a strong likelihood of illicit activity. Consequently, the activity is deemed suspicious and warrants further investigation.",
     "subjects": [
       "HHG-001",
       "TXN-001",
@@ -64,8 +70,34 @@
     "total_amount_usd": 150.0,
     "activity_dates": []
   },
+  "playbook": {
+    "case_id": "HHG-001",
+    "verdict": "fraud",
+    "pattern": "card_not_present",
+    "primary_action": "BLOCK_ALL_CARDS",
+    "approval_route": "L1",
+    "sla_hours": 24,
+    "containment_steps": [
+      "Place temporary security authorization hold on transaction TXN-001",
+      "Issue immediate network-level block on all linked card PANs"
+    ],
+    "customer_communication": {
+      "channel": "SMS / In-App Push",
+      "message_copy": "Did you attempt a purchase of $150.00? Reply YES if this was you, or NO if you did not make this purchase."
+    },
+    "financial_remediation": [
+      "Initiate chargeback procedures for identified exposure"
+    ],
+    "compliance_actions": [
+      "Confirm policy rule alignment (R7, R9)"
+    ],
+    "sign_off_checklist": [
+      "Verify financial exposure calculation ($150.00)",
+      "Confirm TigerGraph graph resolution payload"
+    ]
+  },
   "stop_reason": "Policy thresholds met or maximum evidence gathered.",
   "tool_calls": 8,
-  "tokens": 1225,
-  "latency_s": 2.0759170055389404
+  "tokens": 1065,
+  "latency_s": 1.9018535614013672
 }

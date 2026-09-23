@@ -6,6 +6,8 @@
     "fraud_probability": 0.0,
     "pattern": "none",
     "pattern_description": "Determined by deterministic signatures and LLM verification.",
+    "customer_id": "Extracted-Customer-ID",
+    "trigger_type": "risk_score",
     "affected_txn_ids": [
       "TXN-012"
     ],
@@ -39,7 +41,10 @@
         "reason": "R1: Low risk score with negative anomaly indicators verified."
       }
     ],
-    "what_changed": "No changes from initial assessment."
+    "what_changed": "No changes from initial assessment.",
+    "triggered_rules": [
+      "R1"
+    ]
   },
   "sar": {
     "file": false,
@@ -49,8 +54,33 @@
     "total_amount_usd": null,
     "activity_dates": null
   },
+  "playbook": {
+    "case_id": "HHG-012",
+    "verdict": "legitimate",
+    "pattern": "none",
+    "primary_action": "CLOSE_NO_FRAUD",
+    "approval_route": "auto",
+    "sla_hours": 24,
+    "containment_steps": [
+      "Clear holds and allow transaction processing"
+    ],
+    "customer_communication": {
+      "channel": "None",
+      "message_copy": "No communication necessary."
+    },
+    "financial_remediation": [
+      "No financial remediation required"
+    ],
+    "compliance_actions": [
+      "Confirm policy rule alignment (R1)"
+    ],
+    "sign_off_checklist": [
+      "Verify financial exposure calculation ($150.00)",
+      "Confirm TigerGraph graph resolution payload"
+    ]
+  },
   "stop_reason": "Policy thresholds met or maximum evidence gathered.",
   "tool_calls": 6,
   "tokens": 0,
-  "latency_s": 0.06754040718078613
+  "latency_s": 0.05655050277709961
 }
