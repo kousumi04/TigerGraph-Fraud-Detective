@@ -1,5 +1,5 @@
 # backend/app/policy/evaluator.py
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Tuple
 from .rules import (
     RuleR1, RuleR2, RuleR3, RuleR4, RuleR5,
     RuleR6, RuleR7, RuleR8, RuleR9, RuleR10,

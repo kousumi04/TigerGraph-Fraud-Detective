@@ -16,7 +16,7 @@ async def main():
     parser = argparse.ArgumentParser(description="Run Agentic Fraud Investigation for a single case.")
     parser.add_argument("--case-id", required=True, help="Case ID (e.g., HHG-001)")
     parser.add_argument("--txn-id", default="TXN-DEFAULT", help="Trigger Transaction ID")
-    parser.add_argument("--risk-score", type=float, default=0.85, help="Initial Trigger Risk Score")
+    parser.add_argument("--risk-score", type=float, default=None, help="Initial Trigger Risk Score")
     parser.add_argument("--demo", action="store_true", help="Enable verbose demo mode output")
     
     args = parser.parse_args()

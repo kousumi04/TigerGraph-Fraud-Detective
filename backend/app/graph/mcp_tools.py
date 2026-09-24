@@ -1,21 +1,22 @@
 # backend/app/graph/mcp_tools.py
 from langchain_core.tools import tool
 from typing import List, Dict, Any
+from .dataset_store import get_dataset_graph
 
 @tool
 def get_transaction(transaction_id: str) -> Dict[str, Any]:
     """Retrieve transaction details and risk score by ID using TigerGraph MCP."""
-    return {"transaction_id": transaction_id, "amount": 0.0, "risk_score": 0.0, "status": "fetched"}
+    return get_dataset_graph().transaction(transaction_id)
 
 @tool
 def get_customer_history(customer_id: str) -> List[Dict[str, Any]]:
     """Retrieve historical transactions and account age for a customer."""
-    return []
+    return get_dataset_graph().customer_history(customer_id)
 
 @tool
 def get_device_neighbors(device_id: str) -> List[str]:
     """Find all transactions and cards connected to a specific device profile."""
-    return []
+    return get_dataset_graph().device_neighbors(device_id)
 
 @tool
 def get_connected_cards(card_id: str) -> List[str]:
@@ -25,7 +26,7 @@ def get_connected_cards(card_id: str) -> List[str]:
 @tool
 def get_similar_closed_cases(transaction_id: str) -> List[Dict[str, Any]]:
     """Retrieve similar historical cases using graph topological similarity."""
-    return []
+    return get_dataset_graph().prior_cases(transaction_id)
 
 def get_all_mcp_tools():
     """Returns the bound MCP tools for the LangGraph state orchestration."""

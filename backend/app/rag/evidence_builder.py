@@ -23,6 +23,18 @@ def build_evidence_packet(state: InvestigationState) -> Dict[str, Any]:
     
     packet["device_relationships"] = len(state.get("device_evidence", []))
     packet["connected_cards"] = len(state.get("connected_card_evidence", []))
+    packet["transaction_history"] = [
+        {
+            "id": t.get("id"),
+            "amount": t.get("amount"),
+            "ts": t.get("ts"),
+            "channel": t.get("channel"),
+            "billing_region": t.get("billing_region"),
+            "risk_score": t.get("risk_score"),
+            "status": t.get("status"),
+        }
+        for t in state.get("customer_context", {}).get("history", [])[-20:]
+    ]
     
     # 3. Format prior closed cases
     packet["prior_closed_cases"] = [

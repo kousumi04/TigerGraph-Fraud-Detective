@@ -26,16 +26,4 @@ def retrieve_prior_cases(
         except Exception as e:
             logger.error(f"Failed to retrieve graph case memory: {e}")
 
-    # Fallback/Mock behavior for benchmark structural guarantees if MCP returns empty during testing
-    if not prior_cases:
-        prior_cases = [
-            {
-                "case_id": "HIST-991",
-                "verdict": "fraud",
-                "pattern": "card_not_present",
-                "relevance": "Shared device profile detected",
-                "summary": "Confirmed CNP fraud utilizing the same unrecognized device footprint."
-            }
-        ]
-
     return prior_cases

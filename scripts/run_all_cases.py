@@ -16,8 +16,11 @@ async def process_all_cases():
         return
         
     df = pd.read_csv(cases_file)
-    case_ids = df['case_id'].tolist() if 'case_id' in df.columns else [f"HHG-{str(i).zfill(3)}" for i in range(1, 21)]
-    
+    if 'case_id' not in df.columns:
+        logging.error("case_pack.csv is missing case_id")
+        return
+
+    case_ids = df['case_id'].tolist()
     # Ensure exactly 20 cases are processed as per benchmark rules
     case_ids = case_ids[:20]
     
@@ -29,22 +32,27 @@ async def process_all_cases():
     for case_id in case_ids:
         logging.info(f"--- Processing {case_id} ---")
         
-        # Simulate trigger data extraction. In a full implementation, you'd pull the exact 
-        # starting transaction ID mapped to this case from the CSV.
+        case = df.loc[df["case_id"] == case_id].iloc[0]
         trigger_data = {
-            "transaction_id": f"TXN-{case_id.split('-')[1]}",
-            "risk_score": 0.85 
+            "transaction_id": str(case["flagged_txn_id"]),
+            "customer_id": str(case["customer_id"]),
+            "card_id": str(case["card_id"]),
+            "trigger_type": str(case["trigger_type"]),
+            "trigger_text": str(case["trigger_text"]),
+            "risk_score": float(case["risk_score"]) if pd.notna(case["risk_score"]) else None,
         }
         
         try:
             await run_investigation(case_id, trigger_data)
             success_count += 1
-            # Rate limit pacing for free API tiers (Groq)
-            await asyncio.sleep(2) 
         except Exception as e:
             logging.error(f"Failed to process {case_id}: {e}")
             failure_count += 1
-            
+
+        # Correct async way to pace the API calls
+        logging.info("Sleeping for 15 seconds to reset Groq TPM rate limits...")
+        await asyncio.sleep(15)
+
     logging.info("="*30)
     logging.info(f"Batch execution complete.")
     logging.info(f"Successful: {success_count}/20")

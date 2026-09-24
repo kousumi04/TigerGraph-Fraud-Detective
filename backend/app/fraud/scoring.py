@@ -51,6 +51,14 @@ class FraudScorer:
             score += w
             contributions.append({"signal": "connected_cards_flagged", "contribution": w})
 
+        # The bank score is an alert prior, never a verdict. Keep its impact
+        # deliberately small so structural evidence and customer evidence win.
+        risk_score = graph_signals.get("risk_score")
+        if risk_score is not None:
+            risk_adjustment = (float(risk_score) - 0.5) * 0.20
+            score += risk_adjustment
+            contributions.append({"signal": "risk_score_prior", "contribution": round(risk_adjustment, 4)})
+
         # Simulated customer response signals
         if simulation_signal:
             status = simulation_signal.get("status")

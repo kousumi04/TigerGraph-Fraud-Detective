@@ -3,12 +3,14 @@ from typing import Dict, Any
 from ..models.state import InvestigationState
 
 def request_and_simulate_evidence(state: InvestigationState) -> Dict[str, Any]:
+    trigger_type = state.get("trigger", {}).get("trigger_type")
+    status = "denied" if trigger_type == "customer_report" else "timeout"
     req = {
         "type": "customer_validation",
         "asked_after_step": state.get("tool_calls", 0),
-        "assumed_response": "Simulation Default: denied"
+        "assumed_response": f"Simulation: {status}"
     }
-    response = {"status": "denied", "source": "simulated_customer"}
+    response = {"status": status, "source": "simulated_customer"}
     
     return {
         "evidence_requests": state.get("evidence_requests", []) + [req],

@@ -1,7 +1,10 @@
 # scripts/validate_all_cases.py
 import json
 import logging
+import sys
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from backend.app.models.schemas import BenchmarkCaseOutput
 
 logging.basicConfig(level=logging.INFO, format='%(levelname)s: %(message)s')
