@@ -61,7 +61,7 @@
   "sar": {
     "file": true,
     "reason": "Policy threshold triggered mandatory SAR filing.",
-    "narrative": "The SAR concerns case HHG-004 involving a customer whose identity status is verified. The trigger is transaction TXN-004 which received a risk score of 0.85, indicating a high likelihood of suspicious activity. The transaction was flagged despite no explicit flagged transaction details being present. The analysis identified one device relationship linking the customer to a previously closed case HIST-991. Prior case HIST-991 was adjudicated as fraud with a card‑not‑present pattern, and the relevance note cites a shared device profile detected. No connected cards were observed for the current customer, further isolating the activity to the single device link. The combination of a high risk score, verified identity, and the shared device with a known fraud case raises suspicion of potential fraud reuse. Accordingly, the activity is reported as suspicious and warrants further investigation.",
+    "narrative": "The SAR concerns case HHG-004 involving a customer whose identity status is verified. The trigger is transaction TXN-004 which received a risk score of 0.85. The transaction was processed under the account linked to case HHG-004. No specific flagged transaction details are available, but the system flagged the activity based on the high risk score. The analysis identified one device relationship connecting the current activity to prior activity. A prior closed case, HIST-991, was adjudicated as fraud and involved a card‑not‑present pattern. The relevance note indicates a shared device profile was detected between the current activity and HIST-991. The combination of a high risk score, a shared device with a known fraud case, and the absence of a flagged transaction makes the activity suspicious.",
     "subjects": [
       "HHG-004",
       "TXN-004",
@@ -98,6 +98,6 @@
   },
   "stop_reason": "Policy thresholds met or maximum evidence gathered.",
   "tool_calls": 8,
-  "tokens": 1063,
-  "latency_s": 1.6567127704620361
+  "tokens": 1080,
+  "latency_s": 1.735337734222412
 }

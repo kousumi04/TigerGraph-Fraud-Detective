@@ -8,15 +8,13 @@
     "pattern_description": "Determined by deterministic signatures and LLM verification.",
     "customer_id": "Extracted-Customer-ID",
     "trigger_type": "risk_score",
-    "affected_txn_ids": [
-      "TXN-019"
-    ],
-    "first_suspicious_txn_id": "TXN-019",
+    "affected_txn_ids": [],
+    "first_suspicious_txn_id": "",
     "connected_card_ids": [],
     "connected_device_profiles": [
       "DEV-99"
     ],
-    "exposure_usd": 150.0,
+    "exposure_usd": 0.0,
     "evidence": [],
     "similar_prior_cases": [
       "HIST-991"
@@ -75,12 +73,12 @@
       "Confirm policy rule alignment (R1)"
     ],
     "sign_off_checklist": [
-      "Verify financial exposure calculation ($150.00)",
+      "Verify financial exposure calculation ($0.00)",
       "Confirm TigerGraph graph resolution payload"
     ]
   },
   "stop_reason": "Policy thresholds met or maximum evidence gathered.",
   "tool_calls": 6,
   "tokens": 0,
-  "latency_s": 0.06731081008911133
+  "latency_s": 0.07888126373291016
 }

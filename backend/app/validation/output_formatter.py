@@ -37,13 +37,19 @@ def format_benchmark_output(state: InvestigationState) -> BenchmarkCaseOutput:
         
     pattern = state.get("pattern_candidates", ["none"])[0] if state.get("pattern_candidates") else "none"
     
+    # NEW LOGIC: Clear flagged transactions if the case is cleared as legitimate
+    if final_verdict == "legitimate":
+        affected_ids = []
+        first_suspicious = ""
+        exposure = 0.0
+    
     case_details = CaseDetails(
         status=final_status,
         verdict=final_verdict,
         fraud_probability=prob,
         pattern=pattern,
         pattern_description="Determined by deterministic signatures and LLM verification.",
-        customer_id="Extracted-Customer-ID", # Placeholder for actual graph traversal extraction
+        customer_id="Extracted-Customer-ID", 
         trigger_type="risk_score",
         affected_txn_ids=affected_ids,
         first_suspicious_txn_id=first_suspicious,
