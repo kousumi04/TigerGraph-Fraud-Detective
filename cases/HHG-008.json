@@ -1,101 +1,141 @@
 {
   "case_id": "HHG-008",
   "case": {
-    "status": "closed_fraud",
-    "verdict": "fraud",
-    "fraud_probability": 1.0,
-    "pattern": "card_not_present",
+    "status": "escalated",
+    "verdict": "uncertain",
+    "fraud_probability": 0.676,
+    "pattern": "card_testing",
     "pattern_description": "Determined by deterministic signatures and LLM verification.",
     "customer_id": "Extracted-Customer-ID",
     "trigger_type": "risk_score",
     "affected_txn_ids": [
-      "TXN-008"
+      "3558054"
     ],
-    "first_suspicious_txn_id": "TXN-008",
+    "first_suspicious_txn_id": "3558054",
     "connected_card_ids": [],
     "connected_device_profiles": [
-      "DEV-99"
+      "online|hotmail.com",
+      "online|gmail.com",
+      "online|yahoo.com.mx",
+      "online|yahoo.com",
+      "online|anonymous.com",
+      "online|live.com",
+      "online|icloud.com",
+      "online|outlook.com",
+      "online|comcast.net",
+      "online|hotmail.es",
+      "online|None",
+      "online|live.com.mx",
+      "online|aol.com",
+      "online|cox.net",
+      "online|msn.com",
+      "online|yahoo.es",
+      "online|yahoo.co.uk",
+      "online|prodigy.net.mx",
+      "online|hotmail.fr",
+      "online|outlook.es",
+      "online|cfl.rr.com",
+      "online|att.net",
+      "online|yahoo.fr",
+      "online|mail.com",
+      "online|sbcglobal.net",
+      "online|juno.com",
+      "online|yahoo.de",
+      "online|gmail",
+      "online|bellsouth.net",
+      "online|mac.com",
+      "online|verizon.net",
+      "online|me.com",
+      "online|windstream.net",
+      "online|web.de",
+      "online|hotmail.co.uk",
+      "online|gmx.de",
+      "online|suddenlink.net",
+      "online|optonline.net",
+      "online|charter.net",
+      "online|earthlink.net",
+      "online|hotmail.de",
+      "online|yahoo.co.jp",
+      "online|aim.com",
+      "online|live.fr",
+      "online|rocketmail.com",
+      "online|twc.com",
+      "online|protonmail.com",
+      "online|ymail.com"
     ],
-    "exposure_usd": 150.0,
+    "exposure_usd": 55.68,
     "evidence": [],
     "similar_prior_cases": [
-      "HIST-991"
+      "CC-0056",
+      "CC-0467",
+      "CC-0772",
+      "CC-1293",
+      "CC-1715",
+      "CC-1925",
+      "CC-2059",
+      "CC-2244"
     ],
     "summary": "Automated agentic investigation complete.",
     "written_to_graph": true,
     "graph_case_id": "TG-HHG-008"
   },
-  "evidence_requests": [
-    {
-      "type": "customer_validation",
-      "asked_after_step": 7,
-      "assumed_response": "Simulation Default: denied"
-    }
-  ],
+  "evidence_requests": [],
   "next_best_actions": {
     "initial": [
       {
-        "action": "MONITOR_CARD",
+        "action": "BLOCK_CARD",
         "route": "auto",
-        "reason": "Default protective baseline active."
+        "reason": "R2: Velocity micro-authorizations matched card testing profile."
       }
     ],
     "final": [
       {
-        "action": "BLOCK_ALL_CARDS",
-        "route": "L1",
-        "reason": "R9: Customer confirmed transaction was unauthorized."
-      },
-      {
-        "action": "FILE_REPORT",
-        "route": "L2",
-        "reason": "R7: Regulatory filing triggered (Exposure: $150.00, Probability: 1.00)."
+        "action": "BLOCK_CARD",
+        "route": "auto",
+        "reason": "R2: Velocity micro-authorizations matched card testing profile."
       }
     ],
-    "what_changed": "Evidence simulation shifted probability.",
+    "what_changed": "No changes from initial assessment.",
     "triggered_rules": [
-      "R7",
-      "R9"
+      "R2"
     ]
   },
   "sar": {
-    "file": true,
-    "reason": "Automated fallback due to generation error.",
-    "narrative": "Suspicious activity detected on case HHG-008. Automated pattern match identified. Further investigation required.",
-    "subjects": [
-      "HHG-008"
-    ],
-    "total_amount_usd": 0.0,
-    "activity_dates": []
+    "file": false,
+    "reason": null,
+    "narrative": null,
+    "subjects": null,
+    "total_amount_usd": null,
+    "activity_dates": null
   },
   "playbook": {
     "case_id": "HHG-008",
-    "verdict": "fraud",
-    "pattern": "card_not_present",
-    "primary_action": "BLOCK_ALL_CARDS",
-    "approval_route": "L1",
-    "sla_hours": 24,
+    "verdict": "uncertain",
+    "pattern": "card_testing",
+    "primary_action": "BLOCK_CARD",
+    "approval_route": "auto",
+    "sla_hours": 2,
     "containment_steps": [
-      "Place temporary security authorization hold on transaction TXN-008",
-      "Issue immediate network-level block on all linked card PANs"
+      "Place temporary security authorization hold on transaction 3558054",
+      "Dispatch automated SMS two-way verification prompt"
     ],
     "customer_communication": {
       "channel": "SMS / In-App Push",
-      "message_copy": "Did you attempt a purchase of $150.00? Reply YES if this was you, or NO if you did not make this purchase."
+      "message_copy": "Did you attempt a purchase of $55.68? Reply YES if this was you, or NO if you did not make this purchase."
     },
     "financial_remediation": [
-      "Initiate chargeback procedures for identified exposure"
+      "Hold settlement pending cardholder response"
     ],
     "compliance_actions": [
-      "Confirm policy rule alignment (R7, R9)"
+      "Confirm policy rule alignment (R2)"
     ],
     "sign_off_checklist": [
-      "Verify financial exposure calculation ($150.00)",
+      "Verify financial exposure calculation ($55.68)",
       "Confirm TigerGraph graph resolution payload"
     ]
   },
   "stop_reason": "Policy thresholds met or maximum evidence gathered.",
-  "tool_calls": 8,
-  "tokens": 1068,
-  "latency_s": 1.6547346115112305
+  "tool_calls": 7,
+  "tokens": 1519,
+  "latency_s": 1.678170919418335
 }

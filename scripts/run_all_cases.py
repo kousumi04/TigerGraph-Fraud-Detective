@@ -8,7 +8,8 @@ from backend.app.services.runner import run_investigation
 logging.basicConfig(level=logging.INFO, format='%(levelname)s: %(message)s')
 
 async def process_all_cases():
-    data_dir = Path("data")
+    project_root = Path(__file__).resolve().parent.parent
+    data_dir = project_root / "data"
     cases_file = data_dir / "case_pack.csv"
     
     if not cases_file.exists():

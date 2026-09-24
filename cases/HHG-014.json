@@ -3,7 +3,7 @@
   "case": {
     "status": "closed_legitimate",
     "verdict": "legitimate",
-    "fraud_probability": 0.0,
+    "fraud_probability": 0.05,
     "pattern": "none",
     "pattern_description": "Determined by deterministic signatures and LLM verification.",
     "customer_id": "Extracted-Customer-ID",
@@ -12,18 +12,41 @@
     "first_suspicious_txn_id": "",
     "connected_card_ids": [],
     "connected_device_profiles": [
-      "DEV-99"
+      "online|anonymous.com",
+      "online|hotmail.com",
+      "online|gmail.com",
+      "online|yahoo.com",
+      "online|outlook.com",
+      "online|live.com.mx",
+      "online|msn.com",
+      "online|yahoo.com.mx",
+      "online|hotmail.es",
+      "online|outlook.es",
+      "online|att.net",
+      "online|aol.com",
+      "online|None",
+      "online|live.com",
+      "online|hotmail.co.uk",
+      "online|embarqmail.com",
+      "online|rocketmail.com",
+      "online|bellsouth.net",
+      "online|icloud.com",
+      "online|sbcglobal.net"
     ],
     "exposure_usd": 0.0,
     "evidence": [],
-    "similar_prior_cases": [
-      "HIST-991"
-    ],
+    "similar_prior_cases": [],
     "summary": "Automated agentic investigation complete.",
     "written_to_graph": true,
     "graph_case_id": "TG-HHG-014"
   },
-  "evidence_requests": [],
+  "evidence_requests": [
+    {
+      "type": "customer_validation",
+      "asked_after_step": 7,
+      "assumed_response": "Simulation: timeout"
+    }
+  ],
   "next_best_actions": {
     "initial": [
       {
@@ -39,7 +62,7 @@
         "reason": "R1: Low risk score with negative anomaly indicators verified."
       }
     ],
-    "what_changed": "No changes from initial assessment.",
+    "what_changed": "Evidence simulation shifted probability.",
     "triggered_rules": [
       "R1"
     ]
@@ -78,7 +101,7 @@
     ]
   },
   "stop_reason": "Policy thresholds met or maximum evidence gathered.",
-  "tool_calls": 6,
-  "tokens": 0,
-  "latency_s": 0.054673194885253906
+  "tool_calls": 8,
+  "tokens": 1007,
+  "latency_s": 1.4378905296325684
 }

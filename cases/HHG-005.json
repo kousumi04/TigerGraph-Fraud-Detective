@@ -1,25 +1,75 @@
 {
   "case_id": "HHG-005",
   "case": {
-    "status": "closed_fraud",
-    "verdict": "fraud",
-    "fraud_probability": 1.0,
-    "pattern": "card_not_present",
+    "status": "escalated",
+    "verdict": "uncertain",
+    "fraud_probability": 0.35,
+    "pattern": "none",
     "pattern_description": "Determined by deterministic signatures and LLM verification.",
     "customer_id": "Extracted-Customer-ID",
     "trigger_type": "risk_score",
     "affected_txn_ids": [
-      "TXN-005"
+      "3523199"
     ],
-    "first_suspicious_txn_id": "TXN-005",
+    "first_suspicious_txn_id": "3523199",
     "connected_card_ids": [],
     "connected_device_profiles": [
-      "DEV-99"
+      "online|anonymous.com",
+      "online|gmail.com",
+      "online|yahoo.com",
+      "online|aol.com",
+      "online|icloud.com",
+      "online|hotmail.com",
+      "online|cox.net",
+      "online|comcast.net",
+      "online|msn.com",
+      "online|live.com",
+      "online|bellsouth.net",
+      "online|me.com",
+      "online|charter.net",
+      "online|roadrunner.com",
+      "online|att.net",
+      "online|earthlink.net",
+      "online|sbcglobal.net",
+      "online|verizon.net",
+      "online|twc.com",
+      "online|gmail",
+      "online|rocketmail.com",
+      "online|ymail.com",
+      "online|mac.com",
+      "online|frontiernet.net",
+      "online|outlook.com",
+      "online|embarqmail.com",
+      "online|optonline.net",
+      "online|ptd.net",
+      "online|aim.com",
+      "online|netzero.net",
+      "online|cfl.rr.com",
+      "online|windstream.net",
+      "online|yahoo.co.uk",
+      "online|netzero.com",
+      "online|None",
+      "online|suddenlink.net",
+      "online|q.com",
+      "online|centurylink.net",
+      "online|mail.com",
+      "online|juno.com",
+      "online|frontier.com",
+      "online|hotmail.co.uk",
+      "online|cableone.net",
+      "online|protonmail.com",
+      "online|web.de",
+      "online|yahoo.fr",
+      "online|scranton.edu",
+      "online|yahoo.es",
+      "online|hotmail.de"
     ],
-    "exposure_usd": 150.0,
+    "exposure_usd": 100.07,
     "evidence": [],
     "similar_prior_cases": [
-      "HIST-991"
+      "CC-2400",
+      "CC-2717",
+      "CC-2857"
     ],
     "summary": "Automated agentic investigation complete.",
     "written_to_graph": true,
@@ -29,7 +79,7 @@
     {
       "type": "customer_validation",
       "asked_after_step": 7,
-      "assumed_response": "Simulation Default: denied"
+      "assumed_response": "Simulation: timeout"
     }
   ],
   "next_best_actions": {
@@ -42,62 +92,50 @@
     ],
     "final": [
       {
-        "action": "BLOCK_ALL_CARDS",
-        "route": "L1",
-        "reason": "R9: Customer confirmed transaction was unauthorized."
-      },
-      {
-        "action": "FILE_REPORT",
-        "route": "L2",
-        "reason": "R7: Regulatory filing triggered (Exposure: $150.00, Probability: 1.00)."
+        "action": "MONITOR_CARD",
+        "route": "auto",
+        "reason": "Default protective baseline active."
       }
     ],
     "what_changed": "Evidence simulation shifted probability.",
-    "triggered_rules": [
-      "R7",
-      "R9"
-    ]
+    "triggered_rules": []
   },
   "sar": {
-    "file": true,
-    "reason": "Policy threshold triggered mandatory SAR filing.",
-    "narrative": "The investigation concerns case HHG-005, which was triggered by transaction TXN-005 with a risk score of 0.85. The customer associated with the case has a verified identity status but no account age information. The activity was observed within the institution's transaction processing environment. The transaction was flagged despite the absence of a specific flagged transaction record. Analysis revealed a single device relationship linking the current activity to a prior closed case HIST-991. The prior case HIST-991 was adjudicated as fraud and involved a card-not-present pattern, with relevance noted as a shared device profile detected. The presence of the same device profile in the current case suggests a potential reuse of fraudulent infrastructure. This connection, combined with the high risk score, makes the activity suspicious and warrants further review.",
-    "subjects": [
-      "HHG-005",
-      "TXN-005",
-      "HIST-991"
-    ],
-    "total_amount_usd": 150.0,
-    "activity_dates": []
+    "file": false,
+    "reason": null,
+    "narrative": null,
+    "subjects": null,
+    "total_amount_usd": null,
+    "activity_dates": null
   },
   "playbook": {
     "case_id": "HHG-005",
-    "verdict": "fraud",
-    "pattern": "card_not_present",
-    "primary_action": "BLOCK_ALL_CARDS",
-    "approval_route": "L1",
-    "sla_hours": 24,
+    "verdict": "uncertain",
+    "pattern": "none",
+    "primary_action": "MONITOR_CARD",
+    "approval_route": "auto",
+    "sla_hours": 2,
     "containment_steps": [
-      "Place temporary security authorization hold on transaction TXN-005",
-      "Issue immediate network-level block on all linked card PANs"
+      "Place temporary security authorization hold on transaction 3523199",
+      "Dispatch automated SMS two-way verification prompt"
     ],
     "customer_communication": {
       "channel": "SMS / In-App Push",
-      "message_copy": "Did you attempt a purchase of $150.00? Reply YES if this was you, or NO if you did not make this purchase."
+      "message_copy": "Did you attempt a purchase of $100.07? Reply YES if this was you, or NO if you did not make this purchase."
     },
     "financial_remediation": [
-      "Initiate chargeback procedures for identified exposure"
+      "Hold settlement pending cardholder response"
     ],
     "compliance_actions": [
-      "Confirm policy rule alignment (R7, R9)"
+      "Standard log archival"
     ],
     "sign_off_checklist": [
-      "Verify financial exposure calculation ($150.00)",
+      "Verify financial exposure calculation ($100.07)",
       "Confirm TigerGraph graph resolution payload"
     ]
   },
   "stop_reason": "Policy thresholds met or maximum evidence gathered.",
   "tool_calls": 8,
-  "tokens": 915,
-  "latency_s": 2.144803762435913
+  "tokens": 1467,
+  "latency_s": 1.7314062118530273
 }

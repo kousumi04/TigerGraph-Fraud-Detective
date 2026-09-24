@@ -10,9 +10,11 @@ from ..models.schemas import BenchmarkCaseOutput
 
 logger = logging.getLogger(__name__)
 
-# Initialize graph and output directory
+# Resolve paths from this file so API/server launch directory cannot redirect
+# case persistence away from the repository's cases/ directory.
 graph = build_investigation_graph()
-CASES_DIR = Path("cases")
+PROJECT_ROOT = Path(__file__).resolve().parents[3]
+CASES_DIR = PROJECT_ROOT / "cases"
 CASES_DIR.mkdir(exist_ok=True)
 
 async def run_investigation(case_id: str, trigger_data: Dict[str, Any]) -> BenchmarkCaseOutput:
@@ -43,8 +45,9 @@ async def run_investigation(case_id: str, trigger_data: Dict[str, Any]) -> Bench
     
     # Save the output to the cases/ directory as required by the benchmark
     output_path = CASES_DIR / f"{case_id}.json"
-    with open(output_path, "w", encoding="utf-8") as f:
-        f.write(output.model_dump_json(indent=2))
+    temporary_path = output_path.with_suffix(".json.tmp")
+    temporary_path.write_text(output.model_dump_json(indent=2), encoding="utf-8")
+    temporary_path.replace(output_path)
         
     logger.info(f"Saved completed investigation to {output_path}")
     return output

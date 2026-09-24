@@ -3,23 +3,28 @@
   "case": {
     "status": "closed_fraud",
     "verdict": "fraud",
-    "fraud_probability": 1.0,
-    "pattern": "card_not_present",
+    "fraud_probability": 0.85,
+    "pattern": "none",
     "pattern_description": "Determined by deterministic signatures and LLM verification.",
     "customer_id": "Extracted-Customer-ID",
     "trigger_type": "risk_score",
     "affected_txn_ids": [
-      "TXN-018"
+      "3491361"
     ],
-    "first_suspicious_txn_id": "TXN-018",
+    "first_suspicious_txn_id": "3491361",
     "connected_card_ids": [],
-    "connected_device_profiles": [
-      "DEV-99"
-    ],
-    "exposure_usd": 150.0,
+    "connected_device_profiles": [],
+    "exposure_usd": 39.08,
     "evidence": [],
     "similar_prior_cases": [
-      "HIST-991"
+      "CC-0255",
+      "CC-0405",
+      "CC-0454",
+      "CC-0631",
+      "CC-1450",
+      "CC-1699",
+      "CC-2051",
+      "CC-2187"
     ],
     "summary": "Automated agentic investigation complete.",
     "written_to_graph": true,
@@ -29,7 +34,7 @@
     {
       "type": "customer_validation",
       "asked_after_step": 7,
-      "assumed_response": "Simulation Default: denied"
+      "assumed_response": "Simulation: denied"
     }
   ],
   "next_best_actions": {
@@ -49,53 +54,60 @@
       {
         "action": "FILE_REPORT",
         "route": "L2",
-        "reason": "R7: Regulatory filing triggered (Exposure: $150.00, Probability: 1.00)."
+        "reason": "R7: Regulatory filing triggered (Exposure: $39.08, Probability: 0.85)."
       }
     ],
     "what_changed": "Evidence simulation shifted probability.",
     "triggered_rules": [
-      "R7",
-      "R9"
+      "R9",
+      "R7"
     ]
   },
   "sar": {
     "file": true,
-    "reason": "Automated fallback due to generation error.",
-    "narrative": "Suspicious activity detected on case HHG-018. Automated pattern match identified. Further investigation required.",
+    "reason": "Policy threshold triggered mandatory SAR filing.",
+    "narrative": "The suspicious activity involves customer C02354 and their card C02354-K2 in case HHG-018. The customer reported that a $39.08 in‑person purchase (transaction 3491361) on 2016-11-27 13:41:26 was not authorized. The transaction occurred in billing region 126.0, which differs from the cardholder’s typical region of 325.0 observed in the recent transaction history. The flagged transaction was generated via an in‑person channel and received a risk score of 0.48, prompting a flag. Prior closed cases CC-0255 and CC-0454 show a pattern of account takeover for the same card, with multiple fraudulent in‑person and online purchases, indicating a recurring threat. The combination of an unexpected region, the customer’s denial, and the historical account‑takeover pattern justifies further investigation and possible card re‑issuance.",
     "subjects": [
-      "HHG-018"
+      "HHG-018",
+      "C02354",
+      "C02354-K2",
+      "3491361",
+      "CC-0255",
+      "CC-0454"
     ],
-    "total_amount_usd": 0.0,
-    "activity_dates": []
+    "total_amount_usd": 39.08,
+    "activity_dates": [
+      "2016-11-27 13:41:26"
+    ]
   },
   "playbook": {
     "case_id": "HHG-018",
     "verdict": "fraud",
-    "pattern": "card_not_present",
+    "pattern": "none",
     "primary_action": "BLOCK_ALL_CARDS",
     "approval_route": "L1",
     "sla_hours": 24,
     "containment_steps": [
-      "Place temporary security authorization hold on transaction TXN-018",
+      "Place temporary security authorization hold on transaction 3491361",
       "Issue immediate network-level block on all linked card PANs"
     ],
     "customer_communication": {
       "channel": "SMS / In-App Push",
-      "message_copy": "Did you attempt a purchase of $150.00? Reply YES if this was you, or NO if you did not make this purchase."
+      "message_copy": "Did you attempt a purchase of $39.08? Reply YES if this was you, or NO if you did not make this purchase."
     },
     "financial_remediation": [
       "Initiate chargeback procedures for identified exposure"
     ],
     "compliance_actions": [
-      "Confirm policy rule alignment (R7, R9)"
+      "Confirm policy rule alignment (R9, R7)"
     ],
     "sign_off_checklist": [
-      "Verify financial exposure calculation ($150.00)",
+      "Verify financial exposure calculation ($39.08)",
       "Confirm TigerGraph graph resolution payload"
     ]
   },
   "stop_reason": "Policy thresholds met or maximum evidence gathered.",
   "tool_calls": 8,
-  "tokens": 917,
-  "latency_s": 1.3505299091339111
+  "tokens": 1443,
+  "latency_s": 2.45874285697937
 }

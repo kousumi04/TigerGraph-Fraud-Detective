@@ -4,100 +4,154 @@
     "status": "closed_fraud",
     "verdict": "fraud",
     "fraud_probability": 1.0,
-    "pattern": "card_not_present",
+    "pattern": "card_testing",
     "pattern_description": "Determined by deterministic signatures and LLM verification.",
     "customer_id": "Extracted-Customer-ID",
     "trigger_type": "risk_score",
     "affected_txn_ids": [
-      "TXN-004"
+      "3583227"
     ],
-    "first_suspicious_txn_id": "TXN-004",
+    "first_suspicious_txn_id": "3583227",
     "connected_card_ids": [],
     "connected_device_profiles": [
-      "DEV-99"
+      "online|hotmail.com",
+      "online|gmail.com",
+      "online|yahoo.com.mx",
+      "online|yahoo.com",
+      "online|anonymous.com",
+      "online|live.com",
+      "online|icloud.com",
+      "online|outlook.com",
+      "online|comcast.net",
+      "online|hotmail.es",
+      "online|None",
+      "online|live.com.mx",
+      "online|aol.com",
+      "online|cox.net",
+      "online|msn.com",
+      "online|yahoo.es",
+      "online|yahoo.co.uk",
+      "online|prodigy.net.mx",
+      "online|hotmail.fr",
+      "online|outlook.es",
+      "online|cfl.rr.com",
+      "online|att.net",
+      "online|yahoo.fr",
+      "online|mail.com",
+      "online|sbcglobal.net",
+      "online|juno.com",
+      "online|yahoo.de",
+      "online|gmail",
+      "online|bellsouth.net",
+      "online|mac.com",
+      "online|verizon.net",
+      "online|me.com",
+      "online|windstream.net",
+      "online|web.de",
+      "online|hotmail.co.uk",
+      "online|gmx.de",
+      "online|suddenlink.net",
+      "online|optonline.net",
+      "online|charter.net",
+      "online|earthlink.net",
+      "online|hotmail.de",
+      "online|yahoo.co.jp",
+      "online|aim.com",
+      "online|live.fr",
+      "online|rocketmail.com",
+      "online|twc.com",
+      "online|protonmail.com",
+      "online|ymail.com"
     ],
-    "exposure_usd": 150.0,
+    "exposure_usd": 128.33,
     "evidence": [],
     "similar_prior_cases": [
-      "HIST-991"
+      "CC-0696",
+      "CC-1736",
+      "CC-2121",
+      "CC-3778"
     ],
     "summary": "Automated agentic investigation complete.",
     "written_to_graph": true,
     "graph_case_id": "TG-HHG-004"
   },
-  "evidence_requests": [
-    {
-      "type": "customer_validation",
-      "asked_after_step": 7,
-      "assumed_response": "Simulation Default: denied"
-    }
-  ],
+  "evidence_requests": [],
   "next_best_actions": {
     "initial": [
       {
-        "action": "MONITOR_CARD",
+        "action": "FILE_REPORT",
+        "route": "L2",
+        "reason": "R7: Regulatory filing triggered (Exposure: $128.33, Probability: 1.00)."
+      },
+      {
+        "action": "BLOCK_CARD",
         "route": "auto",
-        "reason": "Default protective baseline active."
+        "reason": "R2: Velocity micro-authorizations matched card testing profile."
       }
     ],
     "final": [
       {
-        "action": "BLOCK_ALL_CARDS",
-        "route": "L1",
-        "reason": "R9: Customer confirmed transaction was unauthorized."
-      },
-      {
         "action": "FILE_REPORT",
         "route": "L2",
-        "reason": "R7: Regulatory filing triggered (Exposure: $150.00, Probability: 1.00)."
+        "reason": "R7: Regulatory filing triggered (Exposure: $128.33, Probability: 1.00)."
+      },
+      {
+        "action": "BLOCK_CARD",
+        "route": "auto",
+        "reason": "R2: Velocity micro-authorizations matched card testing profile."
       }
     ],
-    "what_changed": "Evidence simulation shifted probability.",
+    "what_changed": "No changes from initial assessment.",
     "triggered_rules": [
-      "R7",
-      "R9"
+      "R2",
+      "R7"
     ]
   },
   "sar": {
     "file": true,
     "reason": "Policy threshold triggered mandatory SAR filing.",
-    "narrative": "The SAR concerns case HHG-004 involving a customer whose identity status is verified. The trigger is transaction TXN-004 which received a risk score of 0.85. The transaction was processed under the account linked to case HHG-004. No specific flagged transaction details are available, but the system flagged the activity based on the high risk score. The analysis identified one device relationship connecting the current activity to prior activity. A prior closed case, HIST-991, was adjudicated as fraud and involved a card‑not‑present pattern. The relevance note indicates a shared device profile was detected between the current activity and HIST-991. The combination of a high risk score, a shared device with a known fraud case, and the absence of a flagged transaction makes the activity suspicious.",
+    "narrative": "Customer C08106 reported a suspicious transaction on card C08106-K1. The transaction amount was $128.33 for transaction ID 3583227. It occurred on 2016-12-29 at 01:53:54. The purchase was made online, with no billing region specified, using a hotmail.com email domain. The customer flagged the transaction via a customer report, stating they never made the purchase. The transaction was flagged with a risk score of 0.34 and follows a pattern of prior fraud cases (CC-1736, CC-2121) involving card‑not‑present activity on the same card, raising suspicion. Additional context shows the customer’s identity status is unknown and device relationships count 48, indicating a high number of linked devices.",
     "subjects": [
       "HHG-004",
-      "TXN-004",
-      "HIST-991"
+      "C08106",
+      "C08106-K1",
+      "3583227",
+      "CC-1736",
+      "CC-2121"
     ],
-    "total_amount_usd": 150.0,
-    "activity_dates": []
+    "total_amount_usd": 128.33,
+    "activity_dates": [
+      "2016-12-29 01:53:54"
+    ]
   },
   "playbook": {
     "case_id": "HHG-004",
     "verdict": "fraud",
-    "pattern": "card_not_present",
-    "primary_action": "BLOCK_ALL_CARDS",
-    "approval_route": "L1",
+    "pattern": "card_testing",
+    "primary_action": "FILE_REPORT",
+    "approval_route": "L2",
     "sla_hours": 24,
     "containment_steps": [
-      "Place temporary security authorization hold on transaction TXN-004",
-      "Issue immediate network-level block on all linked card PANs"
+      "Place temporary security authorization hold on transaction 3583227",
+      "Dispatch automated SMS two-way verification prompt"
     ],
     "customer_communication": {
       "channel": "SMS / In-App Push",
-      "message_copy": "Did you attempt a purchase of $150.00? Reply YES if this was you, or NO if you did not make this purchase."
+      "message_copy": "Did you attempt a purchase of $128.33? Reply YES if this was you, or NO if you did not make this purchase."
     },
     "financial_remediation": [
-      "Initiate chargeback procedures for identified exposure"
+      "Hold settlement pending cardholder response"
     ],
     "compliance_actions": [
-      "Confirm policy rule alignment (R7, R9)"
+      "Confirm policy rule alignment (R2, R7)"
     ],
     "sign_off_checklist": [
-      "Verify financial exposure calculation ($150.00)",
+      "Verify financial exposure calculation ($128.33)",
       "Confirm TigerGraph graph resolution payload"
     ]
   },
   "stop_reason": "Policy thresholds met or maximum evidence gathered.",
-  "tool_calls": 8,
-  "tokens": 1080,
-  "latency_s": 1.735337734222412
+  "tool_calls": 7,
+  "tokens": 1370,
+  "latency_s": 1.5169377326965332
 }

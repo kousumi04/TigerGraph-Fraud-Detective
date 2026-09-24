@@ -1,37 +1,77 @@
 {
   "case_id": "HHG-006",
   "case": {
-    "status": "closed_fraud",
-    "verdict": "fraud",
-    "fraud_probability": 1.0,
+    "status": "escalated",
+    "verdict": "uncertain",
+    "fraud_probability": 0.6,
     "pattern": "card_not_present",
     "pattern_description": "Determined by deterministic signatures and LLM verification.",
     "customer_id": "Extracted-Customer-ID",
     "trigger_type": "risk_score",
     "affected_txn_ids": [
-      "TXN-006"
+      "3476682"
     ],
-    "first_suspicious_txn_id": "TXN-006",
+    "first_suspicious_txn_id": "3476682",
     "connected_card_ids": [],
     "connected_device_profiles": [
-      "DEV-99"
+      "online|comcast.net",
+      "online|verizon.net",
+      "online|optonline.net",
+      "online|anonymous.com",
+      "online|gmail.com",
+      "online|hotmail.com",
+      "online|live.com",
+      "online|yahoo.com",
+      "online|frontiernet.net",
+      "online|att.net",
+      "online|aol.com",
+      "online|charter.net",
+      "online|None",
+      "online|web.de",
+      "online|yahoo.com.mx",
+      "online|hotmail.es",
+      "online|sbcglobal.net",
+      "online|roadrunner.com",
+      "online|ymail.com",
+      "online|outlook.com",
+      "online|cox.net",
+      "online|msn.com",
+      "online|frontier.com",
+      "online|bellsouth.net",
+      "online|hotmail.de",
+      "online|windstream.net",
+      "online|icloud.com",
+      "online|embarqmail.com",
+      "online|twc.com",
+      "online|earthlink.net",
+      "online|prodigy.net.mx",
+      "online|netzero.net",
+      "online|live.com.mx",
+      "online|ptd.net",
+      "online|cfl.rr.com",
+      "online|q.com",
+      "online|juno.com",
+      "online|aim.com",
+      "online|me.com",
+      "online|mac.com",
+      "online|gmx.de",
+      "online|rocketmail.com",
+      "online|suddenlink.net",
+      "online|mail.com",
+      "online|yahoo.de",
+      "online|yahoo.co.jp",
+      "online|cableone.net",
+      "online|yahoo.es",
+      "online|outlook.es"
     ],
-    "exposure_usd": 150.0,
+    "exposure_usd": 482.12,
     "evidence": [],
-    "similar_prior_cases": [
-      "HIST-991"
-    ],
+    "similar_prior_cases": [],
     "summary": "Automated agentic investigation complete.",
     "written_to_graph": true,
     "graph_case_id": "TG-HHG-006"
   },
-  "evidence_requests": [
-    {
-      "type": "customer_validation",
-      "asked_after_step": 7,
-      "assumed_response": "Simulation Default: denied"
-    }
-  ],
+  "evidence_requests": [],
   "next_best_actions": {
     "initial": [
       {
@@ -42,60 +82,50 @@
     ],
     "final": [
       {
-        "action": "BLOCK_ALL_CARDS",
-        "route": "L1",
-        "reason": "R9: Customer confirmed transaction was unauthorized."
-      },
-      {
-        "action": "FILE_REPORT",
-        "route": "L2",
-        "reason": "R7: Regulatory filing triggered (Exposure: $150.00, Probability: 1.00)."
+        "action": "MONITOR_CARD",
+        "route": "auto",
+        "reason": "Default protective baseline active."
       }
     ],
-    "what_changed": "Evidence simulation shifted probability.",
-    "triggered_rules": [
-      "R7",
-      "R9"
-    ]
+    "what_changed": "No changes from initial assessment.",
+    "triggered_rules": []
   },
   "sar": {
-    "file": true,
-    "reason": "Automated fallback due to generation error.",
-    "narrative": "Suspicious activity detected on case HHG-006. Automated pattern match identified. Further investigation required.",
-    "subjects": [
-      "HHG-006"
-    ],
-    "total_amount_usd": 0.0,
-    "activity_dates": []
+    "file": false,
+    "reason": null,
+    "narrative": null,
+    "subjects": null,
+    "total_amount_usd": null,
+    "activity_dates": null
   },
   "playbook": {
     "case_id": "HHG-006",
-    "verdict": "fraud",
+    "verdict": "uncertain",
     "pattern": "card_not_present",
-    "primary_action": "BLOCK_ALL_CARDS",
-    "approval_route": "L1",
-    "sla_hours": 24,
+    "primary_action": "MONITOR_CARD",
+    "approval_route": "auto",
+    "sla_hours": 2,
     "containment_steps": [
-      "Place temporary security authorization hold on transaction TXN-006",
-      "Issue immediate network-level block on all linked card PANs"
+      "Place temporary security authorization hold on transaction 3476682",
+      "Dispatch automated SMS two-way verification prompt"
     ],
     "customer_communication": {
       "channel": "SMS / In-App Push",
-      "message_copy": "Did you attempt a purchase of $150.00? Reply YES if this was you, or NO if you did not make this purchase."
+      "message_copy": "Did you attempt a purchase of $482.12? Reply YES if this was you, or NO if you did not make this purchase."
     },
     "financial_remediation": [
-      "Initiate chargeback procedures for identified exposure"
+      "Hold settlement pending cardholder response"
     ],
     "compliance_actions": [
-      "Confirm policy rule alignment (R7, R9)"
+      "Standard log archival"
     ],
     "sign_off_checklist": [
-      "Verify financial exposure calculation ($150.00)",
+      "Verify financial exposure calculation ($482.12)",
       "Confirm TigerGraph graph resolution payload"
     ]
   },
   "stop_reason": "Policy thresholds met or maximum evidence gathered.",
-  "tool_calls": 8,
-  "tokens": 1132,
-  "latency_s": 1.7895705699920654
+  "tool_calls": 7,
+  "tokens": 939,
+  "latency_s": 1.213592767715454
 }

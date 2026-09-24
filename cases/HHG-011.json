@@ -1,23 +1,33 @@
 {
   "case_id": "HHG-011",
   "case": {
-    "status": "closed_legitimate",
-    "verdict": "legitimate",
-    "fraud_probability": 0.0,
-    "pattern": "none",
+    "status": "closed_fraud",
+    "verdict": "fraud",
+    "fraud_probability": 1.0,
+    "pattern": "card_testing",
     "pattern_description": "Determined by deterministic signatures and LLM verification.",
     "customer_id": "Extracted-Customer-ID",
     "trigger_type": "risk_score",
-    "affected_txn_ids": [],
-    "first_suspicious_txn_id": "",
+    "affected_txn_ids": [
+      "3583368"
+    ],
+    "first_suspicious_txn_id": "3583368",
     "connected_card_ids": [],
     "connected_device_profiles": [
-      "DEV-99"
+      "online|hotmail.com",
+      "online|gmail.com"
     ],
-    "exposure_usd": 0.0,
+    "exposure_usd": 131.3,
     "evidence": [],
     "similar_prior_cases": [
-      "HIST-991"
+      "CC-0031",
+      "CC-0290",
+      "CC-1056",
+      "CC-2247",
+      "CC-2673",
+      "CC-2799",
+      "CC-3039",
+      "CC-3206"
     ],
     "summary": "Automated agentic investigation complete.",
     "written_to_graph": true,
@@ -27,58 +37,77 @@
   "next_best_actions": {
     "initial": [
       {
-        "action": "CLOSE_NO_FRAUD",
+        "action": "FILE_REPORT",
+        "route": "L2",
+        "reason": "R7: Regulatory filing triggered (Exposure: $131.30, Probability: 1.00)."
+      },
+      {
+        "action": "BLOCK_CARD",
         "route": "auto",
-        "reason": "R1: Low risk score with negative anomaly indicators verified."
+        "reason": "R2: Velocity micro-authorizations matched card testing profile."
       }
     ],
     "final": [
       {
-        "action": "CLOSE_NO_FRAUD",
+        "action": "FILE_REPORT",
+        "route": "L2",
+        "reason": "R7: Regulatory filing triggered (Exposure: $131.30, Probability: 1.00)."
+      },
+      {
+        "action": "BLOCK_CARD",
         "route": "auto",
-        "reason": "R1: Low risk score with negative anomaly indicators verified."
+        "reason": "R2: Velocity micro-authorizations matched card testing profile."
       }
     ],
     "what_changed": "No changes from initial assessment.",
     "triggered_rules": [
-      "R1"
+      "R2",
+      "R7"
     ]
   },
   "sar": {
-    "file": false,
-    "reason": null,
-    "narrative": null,
-    "subjects": null,
-    "total_amount_usd": null,
-    "activity_dates": null
+    "file": true,
+    "reason": "Policy threshold triggered mandatory SAR filing.",
+    "narrative": "Customer C11923 reported that the online purchase of $131.30 on transaction 3583368 at 2016-12-29 03:27:44 was not authorized. The flagged transaction was processed through the online channel using the card C11923‑K2 and an email domain of gmail.com. The risk score of 0.39 and the presence of two device relationships suggest atypical activity for this account. The customer’s identity status is unknown and the account age is not provided, limiting verification. Prior closed cases CC‑0031, CC‑0290, and CC‑1056 show a pattern of card‑not‑present fraud and card testing on the same card and customer. The concentration of multiple small online purchases on the same day and the sudden larger disputed amount increase the suspicion. Therefore the activity is deemed suspicious due to the customer’s dispute, prior fraud history, and anomalous device usage.",
+    "subjects": [
+      "C11923",
+      "C11923-K2",
+      "3583368",
+      "HHG-011"
+    ],
+    "total_amount_usd": 131.3,
+    "activity_dates": [
+      "2016-12-29 03:27:44"
+    ]
   },
   "playbook": {
     "case_id": "HHG-011",
-    "verdict": "legitimate",
-    "pattern": "none",
-    "primary_action": "CLOSE_NO_FRAUD",
-    "approval_route": "auto",
+    "verdict": "fraud",
+    "pattern": "card_testing",
+    "primary_action": "FILE_REPORT",
+    "approval_route": "L2",
     "sla_hours": 24,
     "containment_steps": [
-      "Clear holds and allow transaction processing"
+      "Place temporary security authorization hold on transaction 3583368",
+      "Dispatch automated SMS two-way verification prompt"
     ],
     "customer_communication": {
-      "channel": "None",
-      "message_copy": "No communication necessary."
+      "channel": "SMS / In-App Push",
+      "message_copy": "Did you attempt a purchase of $131.30? Reply YES if this was you, or NO if you did not make this purchase."
     },
     "financial_remediation": [
-      "No financial remediation required"
+      "Hold settlement pending cardholder response"
     ],
     "compliance_actions": [
-      "Confirm policy rule alignment (R1)"
+      "Confirm policy rule alignment (R2, R7)"
     ],
     "sign_off_checklist": [
-      "Verify financial exposure calculation ($0.00)",
+      "Verify financial exposure calculation ($131.30)",
       "Confirm TigerGraph graph resolution payload"
     ]
   },
   "stop_reason": "Policy thresholds met or maximum evidence gathered.",
-  "tool_calls": 6,
-  "tokens": 0,
-  "latency_s": 0.05879569053649902
+  "tool_calls": 7,
+  "tokens": 1723,
+  "latency_s": 3.0288500785827637
 }

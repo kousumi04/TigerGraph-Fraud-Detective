@@ -3,23 +3,26 @@
   "case": {
     "status": "closed_fraud",
     "verdict": "fraud",
-    "fraud_probability": 1.0,
-    "pattern": "card_not_present",
+    "fraud_probability": 0.85,
+    "pattern": "none",
     "pattern_description": "Determined by deterministic signatures and LLM verification.",
     "customer_id": "Extracted-Customer-ID",
     "trigger_type": "risk_score",
     "affected_txn_ids": [
-      "TXN-003"
+      "3530164"
     ],
-    "first_suspicious_txn_id": "TXN-003",
+    "first_suspicious_txn_id": "3530164",
     "connected_card_ids": [],
-    "connected_device_profiles": [
-      "DEV-99"
-    ],
-    "exposure_usd": 150.0,
+    "connected_device_profiles": [],
+    "exposure_usd": 49.0,
     "evidence": [],
     "similar_prior_cases": [
-      "HIST-991"
+      "CC-1589",
+      "CC-2817",
+      "CC-2935",
+      "CC-3327",
+      "CC-3682",
+      "CC-4957"
     ],
     "summary": "Automated agentic investigation complete.",
     "written_to_graph": true,
@@ -29,7 +32,7 @@
     {
       "type": "customer_validation",
       "asked_after_step": 7,
-      "assumed_response": "Simulation Default: denied"
+      "assumed_response": "Simulation: denied"
     }
   ],
   "next_best_actions": {
@@ -49,55 +52,60 @@
       {
         "action": "FILE_REPORT",
         "route": "L2",
-        "reason": "R7: Regulatory filing triggered (Exposure: $150.00, Probability: 1.00)."
+        "reason": "R7: Regulatory filing triggered (Exposure: $49.00, Probability: 0.85)."
       }
     ],
     "what_changed": "Evidence simulation shifted probability.",
     "triggered_rules": [
-      "R7",
-      "R9"
+      "R9",
+      "R7"
     ]
   },
   "sar": {
     "file": true,
     "reason": "Policy threshold triggered mandatory SAR filing.",
-    "narrative": "The SAR concerns case HHG-003 involving a customer whose identity status is verified. The trigger for the report is transaction TXN-003 which received a risk score of 0.85. The transaction was flagged despite no explicit flagged transaction details being present. The activity occurred within the banking system at the time the transaction was processed. Analysis revealed a single device relationship linking the customer to a previously closed case HIST-991. The prior case HIST-991 was adjudicated as fraud and involved a card-not-present pattern with a shared device profile. The shared device profile suggests the same device was used in both the current and prior fraudulent activities. Consequently, the high risk score and the connection to a known fraud pattern justify the suspicion of illicit activity.",
+    "narrative": "The suspicious activity involves customer C08623 and their card C08623-K2 in case HHG-003. On 2016-12-10 at 13:01:21 the flagged transaction 3530164 for $49.00 was made in-person using billing region 330.0. The customer reported that they never made this purchase, indicating a possible unauthorized use. The transaction was flagged with a risk score of 0.4 and the channel was in-person, despite the customer's identity status being unknown. Review of the recent transaction history shows numerous in-person purchases in various billing regions, but no prior similar low-value disputed activity, and the card had previously been involved in confirmed fraud cases CC-2817 and CC-2935 for out-of-region use. The combination of a customer-initiated dispute, a modest amount, a mismatched billing region, and a history of out-of-region fraud makes this transaction suspicious and warrants further investigation.",
     "subjects": [
       "HHG-003",
-      "TXN-003",
-      "HIST-991"
+      "C08623",
+      "C08623-K2",
+      "3530164",
+      "CC-2817",
+      "CC-2935"
     ],
-    "total_amount_usd": 150.0,
-    "activity_dates": []
+    "total_amount_usd": 49.0,
+    "activity_dates": [
+      "2016-12-10 13:01:21"
+    ]
   },
   "playbook": {
     "case_id": "HHG-003",
     "verdict": "fraud",
-    "pattern": "card_not_present",
+    "pattern": "none",
     "primary_action": "BLOCK_ALL_CARDS",
     "approval_route": "L1",
     "sla_hours": 24,
     "containment_steps": [
-      "Place temporary security authorization hold on transaction TXN-003",
+      "Place temporary security authorization hold on transaction 3530164",
       "Issue immediate network-level block on all linked card PANs"
     ],
     "customer_communication": {
       "channel": "SMS / In-App Push",
-      "message_copy": "Did you attempt a purchase of $150.00? Reply YES if this was you, or NO if you did not make this purchase."
+      "message_copy": "Did you attempt a purchase of $49.00? Reply YES if this was you, or NO if you did not make this purchase."
     },
     "financial_remediation": [
       "Initiate chargeback procedures for identified exposure"
     ],
     "compliance_actions": [
-      "Confirm policy rule alignment (R7, R9)"
+      "Confirm policy rule alignment (R9, R7)"
     ],
     "sign_off_checklist": [
-      "Verify financial exposure calculation ($150.00)",
+      "Verify financial exposure calculation ($49.00)",
       "Confirm TigerGraph graph resolution payload"
     ]
   },
   "stop_reason": "Policy thresholds met or maximum evidence gathered.",
   "tool_calls": 8,
-  "tokens": 1220,
-  "latency_s": 1.9639496803283691
+  "tokens": 1318,
+  "latency_s": 1.4350523948669434
 }

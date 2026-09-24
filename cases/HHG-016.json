@@ -1,24 +1,83 @@
 {
   "case_id": "HHG-016",
   "case": {
-    "status": "closed_legitimate",
-    "verdict": "legitimate",
-    "fraud_probability": 0.0,
-    "pattern": "none",
+    "status": "escalated",
+    "verdict": "uncertain",
+    "fraud_probability": 0.374,
+    "pattern": "card_testing",
     "pattern_description": "Determined by deterministic signatures and LLM verification.",
     "customer_id": "Extracted-Customer-ID",
     "trigger_type": "risk_score",
-    "affected_txn_ids": [],
-    "first_suspicious_txn_id": "",
+    "affected_txn_ids": [
+      "3534820"
+    ],
+    "first_suspicious_txn_id": "3534820",
     "connected_card_ids": [],
     "connected_device_profiles": [
-      "DEV-99"
+      "online|gmail.com",
+      "online|yahoo.com",
+      "online|outlook.com",
+      "online|anonymous.com",
+      "online|charter.net",
+      "online|hotmail.com",
+      "online|comcast.net",
+      "online|optonline.net",
+      "online|live.com.mx",
+      "online|aol.com",
+      "online|att.net",
+      "online|msn.com",
+      "online|yahoo.com.mx",
+      "online|bellsouth.net",
+      "online|ymail.com",
+      "online|hotmail.es",
+      "online|icloud.com",
+      "online|cox.net",
+      "online|juno.com",
+      "online|sbcglobal.net",
+      "online|None",
+      "online|me.com",
+      "online|aim.com",
+      "online|live.com",
+      "online|mail.com",
+      "online|frontier.com",
+      "online|verizon.net",
+      "online|outlook.es",
+      "online|suddenlink.net",
+      "online|scranton.edu",
+      "online|mac.com",
+      "online|yahoo.de",
+      "online|frontiernet.net",
+      "online|gmail",
+      "online|web.de",
+      "online|q.com",
+      "online|prodigy.net.mx",
+      "online|windstream.net",
+      "online|roadrunner.com",
+      "online|embarqmail.com",
+      "online|ptd.net",
+      "online|earthlink.net",
+      "online|twc.com",
+      "online|yahoo.fr",
+      "online|rocketmail.com",
+      "online|gmx.de",
+      "online|centurylink.net",
+      "online|netzero.com",
+      "online|cfl.rr.com",
+      "online|sc.rr.com",
+      "online|hotmail.fr",
+      "online|netzero.net",
+      "online|protonmail.com",
+      "online|yahoo.co.uk",
+      "online|cableone.net",
+      "online|hotmail.co.uk",
+      "online|live.fr",
+      "online|yahoo.es",
+      "online|hotmail.de",
+      "online|yahoo.co.jp"
     ],
-    "exposure_usd": 0.0,
+    "exposure_usd": 59.67,
     "evidence": [],
-    "similar_prior_cases": [
-      "HIST-991"
-    ],
+    "similar_prior_cases": [],
     "summary": "Automated agentic investigation complete.",
     "written_to_graph": true,
     "graph_case_id": "TG-HHG-016"
@@ -27,21 +86,21 @@
   "next_best_actions": {
     "initial": [
       {
-        "action": "CLOSE_NO_FRAUD",
+        "action": "BLOCK_CARD",
         "route": "auto",
-        "reason": "R1: Low risk score with negative anomaly indicators verified."
+        "reason": "R2: Velocity micro-authorizations matched card testing profile."
       }
     ],
     "final": [
       {
-        "action": "CLOSE_NO_FRAUD",
+        "action": "BLOCK_CARD",
         "route": "auto",
-        "reason": "R1: Low risk score with negative anomaly indicators verified."
+        "reason": "R2: Velocity micro-authorizations matched card testing profile."
       }
     ],
     "what_changed": "No changes from initial assessment.",
     "triggered_rules": [
-      "R1"
+      "R2"
     ]
   },
   "sar": {
@@ -54,31 +113,32 @@
   },
   "playbook": {
     "case_id": "HHG-016",
-    "verdict": "legitimate",
-    "pattern": "none",
-    "primary_action": "CLOSE_NO_FRAUD",
+    "verdict": "uncertain",
+    "pattern": "card_testing",
+    "primary_action": "BLOCK_CARD",
     "approval_route": "auto",
-    "sla_hours": 24,
+    "sla_hours": 2,
     "containment_steps": [
-      "Clear holds and allow transaction processing"
+      "Place temporary security authorization hold on transaction 3534820",
+      "Dispatch automated SMS two-way verification prompt"
     ],
     "customer_communication": {
-      "channel": "None",
-      "message_copy": "No communication necessary."
+      "channel": "SMS / In-App Push",
+      "message_copy": "Did you attempt a purchase of $59.67? Reply YES if this was you, or NO if you did not make this purchase."
     },
     "financial_remediation": [
-      "No financial remediation required"
+      "Hold settlement pending cardholder response"
     ],
     "compliance_actions": [
-      "Confirm policy rule alignment (R1)"
+      "Confirm policy rule alignment (R2)"
     ],
     "sign_off_checklist": [
-      "Verify financial exposure calculation ($0.00)",
+      "Verify financial exposure calculation ($59.67)",
       "Confirm TigerGraph graph resolution payload"
     ]
   },
   "stop_reason": "Policy thresholds met or maximum evidence gathered.",
-  "tool_calls": 6,
-  "tokens": 0,
-  "latency_s": 0.05102276802062988
+  "tool_calls": 7,
+  "tokens": 976,
+  "latency_s": 3.235611915588379
 }

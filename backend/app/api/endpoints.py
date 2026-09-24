@@ -9,7 +9,8 @@ import json
 from pathlib import Path
 
 router = APIRouter()
-CASES_DIR = Path("cases")
+PROJECT_ROOT = Path(__file__).resolve().parents[3]
+CASES_DIR = PROJECT_ROOT / "cases"
 
 class TriggerPayload(BaseModel):
     transaction_id: str

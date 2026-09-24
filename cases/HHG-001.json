@@ -1,25 +1,26 @@
 {
   "case_id": "HHG-001",
   "case": {
-    "status": "closed_fraud",
-    "verdict": "fraud",
-    "fraud_probability": 1.0,
-    "pattern": "card_not_present",
+    "status": "escalated",
+    "verdict": "uncertain",
+    "fraud_probability": 0.35,
+    "pattern": "none",
     "pattern_description": "Determined by deterministic signatures and LLM verification.",
     "customer_id": "Extracted-Customer-ID",
     "trigger_type": "risk_score",
     "affected_txn_ids": [
-      "TXN-001"
+      "3514030"
     ],
-    "first_suspicious_txn_id": "TXN-001",
+    "first_suspicious_txn_id": "3514030",
     "connected_card_ids": [],
-    "connected_device_profiles": [
-      "DEV-99"
-    ],
-    "exposure_usd": 150.0,
+    "connected_device_profiles": [],
+    "exposure_usd": 77.07,
     "evidence": [],
     "similar_prior_cases": [
-      "HIST-991"
+      "CC-1066",
+      "CC-1673",
+      "CC-2964",
+      "CC-3587"
     ],
     "summary": "Automated agentic investigation complete.",
     "written_to_graph": true,
@@ -29,7 +30,7 @@
     {
       "type": "customer_validation",
       "asked_after_step": 7,
-      "assumed_response": "Simulation Default: denied"
+      "assumed_response": "Simulation: timeout"
     }
   ],
   "next_best_actions": {
@@ -42,62 +43,50 @@
     ],
     "final": [
       {
-        "action": "BLOCK_ALL_CARDS",
-        "route": "L1",
-        "reason": "R9: Customer confirmed transaction was unauthorized."
-      },
-      {
-        "action": "FILE_REPORT",
-        "route": "L2",
-        "reason": "R7: Regulatory filing triggered (Exposure: $150.00, Probability: 1.00)."
+        "action": "MONITOR_CARD",
+        "route": "auto",
+        "reason": "Default protective baseline active."
       }
     ],
     "what_changed": "Evidence simulation shifted probability.",
-    "triggered_rules": [
-      "R7",
-      "R9"
-    ]
+    "triggered_rules": []
   },
   "sar": {
-    "file": true,
-    "reason": "Policy threshold triggered mandatory SAR filing.",
-    "narrative": "The SAR concerns case HHG-001 involving a customer whose identity status is verified. The trigger is transaction TXN-001 which received a risk score of 0.85. The transaction occurred on a device that has one recorded relationship to other accounts. No flagged transaction details are available, but the elevated risk score prompted review. A prior closed case, HIST-991, was adjudicated as fraud and involved a card‑not‑present pattern. The prior case shares a device profile with the current customer, establishing a link between the two activities. This combination of a high risk score, verified identity, and a shared device with a known fraud case makes the activity suspicious.",
-    "subjects": [
-      "HHG-001",
-      "TXN-001",
-      "HIST-991"
-    ],
-    "total_amount_usd": 150.0,
-    "activity_dates": []
+    "file": false,
+    "reason": null,
+    "narrative": null,
+    "subjects": null,
+    "total_amount_usd": null,
+    "activity_dates": null
   },
   "playbook": {
     "case_id": "HHG-001",
-    "verdict": "fraud",
-    "pattern": "card_not_present",
-    "primary_action": "BLOCK_ALL_CARDS",
-    "approval_route": "L1",
-    "sla_hours": 24,
+    "verdict": "uncertain",
+    "pattern": "none",
+    "primary_action": "MONITOR_CARD",
+    "approval_route": "auto",
+    "sla_hours": 2,
     "containment_steps": [
-      "Place temporary security authorization hold on transaction TXN-001",
-      "Issue immediate network-level block on all linked card PANs"
+      "Place temporary security authorization hold on transaction 3514030",
+      "Dispatch automated SMS two-way verification prompt"
     ],
     "customer_communication": {
       "channel": "SMS / In-App Push",
-      "message_copy": "Did you attempt a purchase of $150.00? Reply YES if this was you, or NO if you did not make this purchase."
+      "message_copy": "Did you attempt a purchase of $77.07? Reply YES if this was you, or NO if you did not make this purchase."
     },
     "financial_remediation": [
-      "Initiate chargeback procedures for identified exposure"
+      "Hold settlement pending cardholder response"
     ],
     "compliance_actions": [
-      "Confirm policy rule alignment (R7, R9)"
+      "Standard log archival"
     ],
     "sign_off_checklist": [
-      "Verify financial exposure calculation ($150.00)",
+      "Verify financial exposure calculation ($77.07)",
       "Confirm TigerGraph graph resolution payload"
     ]
   },
   "stop_reason": "Policy thresholds met or maximum evidence gathered.",
   "tool_calls": 8,
-  "tokens": 893,
-  "latency_s": 1.4979450702667236
+  "tokens": 1490,
+  "latency_s": 9.282182931900024
 }

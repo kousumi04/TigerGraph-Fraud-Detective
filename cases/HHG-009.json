@@ -1,29 +1,82 @@
 {
   "case_id": "HHG-009",
   "case": {
-    "status": "closed_legitimate",
-    "verdict": "legitimate",
-    "fraud_probability": 0.0,
+    "status": "escalated",
+    "verdict": "uncertain",
+    "fraud_probability": 0.55,
     "pattern": "none",
     "pattern_description": "Determined by deterministic signatures and LLM verification.",
     "customer_id": "Extracted-Customer-ID",
     "trigger_type": "risk_score",
-    "affected_txn_ids": [],
-    "first_suspicious_txn_id": "",
+    "affected_txn_ids": [
+      "3581141"
+    ],
+    "first_suspicious_txn_id": "3581141",
     "connected_card_ids": [],
     "connected_device_profiles": [
-      "DEV-99"
+      "online|hotmail.com",
+      "online|gmail.com",
+      "online|yahoo.com.mx",
+      "online|yahoo.com",
+      "online|anonymous.com",
+      "online|live.com",
+      "online|icloud.com",
+      "online|outlook.com",
+      "online|comcast.net",
+      "online|hotmail.es",
+      "online|None",
+      "online|live.com.mx",
+      "online|aol.com",
+      "online|cox.net",
+      "online|msn.com",
+      "online|yahoo.es",
+      "online|yahoo.co.uk",
+      "online|prodigy.net.mx",
+      "online|hotmail.fr",
+      "online|outlook.es",
+      "online|cfl.rr.com",
+      "online|att.net",
+      "online|yahoo.fr",
+      "online|mail.com",
+      "online|sbcglobal.net",
+      "online|juno.com",
+      "online|yahoo.de",
+      "online|gmail",
+      "online|bellsouth.net",
+      "online|mac.com",
+      "online|verizon.net",
+      "online|me.com",
+      "online|windstream.net",
+      "online|web.de",
+      "online|hotmail.co.uk",
+      "online|gmx.de",
+      "online|suddenlink.net",
+      "online|optonline.net",
+      "online|charter.net",
+      "online|earthlink.net",
+      "online|hotmail.de",
+      "online|yahoo.co.jp",
+      "online|aim.com",
+      "online|live.fr",
+      "online|rocketmail.com",
+      "online|twc.com",
+      "online|protonmail.com",
+      "online|ymail.com"
     ],
-    "exposure_usd": 0.0,
+    "exposure_usd": 30.02,
     "evidence": [],
-    "similar_prior_cases": [
-      "HIST-991"
-    ],
+    "similar_prior_cases": [],
     "summary": "Automated agentic investigation complete.",
     "written_to_graph": true,
     "graph_case_id": "TG-HHG-009"
   },
-  "evidence_requests": [],
+  "evidence_requests": [
+    {
+      "type": "customer_validation",
+      "asked_after_step": 7,
+      "assumed_response": "Simulation: denied"
+    }
+  ],
   "next_best_actions": {
     "initial": [
       {
@@ -34,14 +87,14 @@
     ],
     "final": [
       {
-        "action": "CLOSE_NO_FRAUD",
-        "route": "auto",
-        "reason": "R1: Low risk score with negative anomaly indicators verified."
+        "action": "BLOCK_ALL_CARDS",
+        "route": "L1",
+        "reason": "R9: Customer confirmed transaction was unauthorized."
       }
     ],
-    "what_changed": "No changes from initial assessment.",
+    "what_changed": "Evidence simulation shifted probability.",
     "triggered_rules": [
-      "R1"
+      "R9"
     ]
   },
   "sar": {
@@ -54,31 +107,32 @@
   },
   "playbook": {
     "case_id": "HHG-009",
-    "verdict": "legitimate",
+    "verdict": "uncertain",
     "pattern": "none",
-    "primary_action": "CLOSE_NO_FRAUD",
-    "approval_route": "auto",
-    "sla_hours": 24,
+    "primary_action": "BLOCK_ALL_CARDS",
+    "approval_route": "L1",
+    "sla_hours": 2,
     "containment_steps": [
-      "Clear holds and allow transaction processing"
+      "Place temporary security authorization hold on transaction 3581141",
+      "Issue immediate network-level block on all linked card PANs"
     ],
     "customer_communication": {
-      "channel": "None",
-      "message_copy": "No communication necessary."
+      "channel": "SMS / In-App Push",
+      "message_copy": "Did you attempt a purchase of $30.02? Reply YES if this was you, or NO if you did not make this purchase."
     },
     "financial_remediation": [
-      "No financial remediation required"
+      "Initiate chargeback procedures for identified exposure"
     ],
     "compliance_actions": [
-      "Confirm policy rule alignment (R1)"
+      "Confirm policy rule alignment (R9)"
     ],
     "sign_off_checklist": [
-      "Verify financial exposure calculation ($0.00)",
+      "Verify financial exposure calculation ($30.02)",
       "Confirm TigerGraph graph resolution payload"
     ]
   },
   "stop_reason": "Policy thresholds met or maximum evidence gathered.",
-  "tool_calls": 6,
-  "tokens": 0,
-  "latency_s": 0.08723759651184082
+  "tool_calls": 8,
+  "tokens": 1120,
+  "latency_s": 1.466771125793457
 }
