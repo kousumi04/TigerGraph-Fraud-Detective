@@ -61,7 +61,7 @@
   "sar": {
     "file": true,
     "reason": "Policy threshold triggered mandatory SAR filing.",
-    "narrative": "The SAR concerns case HHG-001 involving a customer with a verified identity status. The trigger was transaction TXN-001 which received a risk score of 0.85. The transaction was flagged despite no explicit flagged transaction details being present. Analysis revealed one device relationship linking the customer to a previously closed case HIST-991. The prior case HIST-991 was adjudicated as fraud and involved a card-not-present pattern with a shared device profile. The presence of the shared device profile and the high risk score indicate a strong likelihood of illicit activity. Consequently, the activity is deemed suspicious and warrants further investigation.",
+    "narrative": "The SAR concerns case HHG-001 involving a customer whose identity status is verified. The trigger is transaction TXN-001 which received a risk score of 0.85. The transaction was processed when the system detected a single device relationship linking the customer to prior activity. The device relationship connects to prior closed case HIST-991, which was adjudicated as fraud involving a card‑not‑present pattern. No flagged transaction details or amounts are available, and there are no connected cards associated with the account. The risk algorithm flagged the activity because the shared device profile matches a known fraudulent pattern. Consequently, the activity is considered suspicious due to the high risk score and the linkage to a previously confirmed fraud case.",
     "subjects": [
       "HHG-001",
       "TXN-001",
@@ -98,6 +98,6 @@
   },
   "stop_reason": "Policy thresholds met or maximum evidence gathered.",
   "tool_calls": 8,
-  "tokens": 1065,
-  "latency_s": 1.9018535614013672
+  "tokens": 916,
+  "latency_s": 1.462970495223999
 }

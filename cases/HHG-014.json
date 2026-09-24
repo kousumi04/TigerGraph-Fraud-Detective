@@ -96,6 +96,6 @@
   },
   "stop_reason": "Policy thresholds met or maximum evidence gathered.",
   "tool_calls": 8,
-  "tokens": 888,
-  "latency_s": 1.3338596820831299
+  "tokens": 1004,
+  "latency_s": 1.604079246520996
 }

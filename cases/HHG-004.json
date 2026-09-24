@@ -61,7 +61,7 @@
   "sar": {
     "file": true,
     "reason": "Policy threshold triggered mandatory SAR filing.",
-    "narrative": "The SAR concerns case HHG-004 involving a customer whose identity status is verified. The trigger was transaction TXN-004 which received a risk score of 0.85. No specific flagged transaction details were provided, but the system noted one device relationship linking the customer to prior activity. The prior closed case HIST-991 was adjudicated as fraud with a card‑not‑present pattern and a relevance note indicating a shared device profile detected. The presence of a single device relationship and zero connected cards suggests the same device was used across multiple accounts. This linkage, combined with the high risk score, raises suspicion that the current activity may be an extension of the fraudulent behavior observed in HIST-991. Therefore the activity is considered suspicious because the same device is being reused despite a verified identity, indicating potential circumvention of controls.",
+    "narrative": "The SAR concerns case HHG-004 involving a customer whose identity status is verified. The trigger is transaction TXN-004 which received a risk score of 0.85, indicating a high likelihood of suspicious activity. The transaction was flagged despite no explicit flagged transaction details being present. The analysis identified one device relationship linking the customer to a previously closed case HIST-991. Prior case HIST-991 was adjudicated as fraud with a card‑not‑present pattern, and the relevance note cites a shared device profile detected. No connected cards were observed for the current customer, further isolating the activity to the single device link. The combination of a high risk score, verified identity, and the shared device with a known fraud case raises suspicion of potential fraud reuse. Accordingly, the activity is reported as suspicious and warrants further investigation.",
     "subjects": [
       "HHG-004",
       "TXN-004",
@@ -98,6 +98,6 @@
   },
   "stop_reason": "Policy thresholds met or maximum evidence gathered.",
   "tool_calls": 8,
-  "tokens": 925,
-  "latency_s": 1.3793387413024902
+  "tokens": 1063,
+  "latency_s": 1.6567127704620361
 }
